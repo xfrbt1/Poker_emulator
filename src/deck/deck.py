@@ -1,6 +1,13 @@
 from random import shuffle
 
-from card import Card
+
+class Card:
+    def __init__(self, value: str, suit: str):
+        self.value = value
+        self.suit = suit
+
+    def __str__(self):
+        return f"({self.value}, {self.suit})"
 
 
 class Deck:
@@ -8,36 +15,69 @@ class Deck:
     values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
 
     def __init__(self):
-        self._deck: list[Card] | list = []
-        self._thrown: list[Card] | list = []
+        self.deck: list = []
+        self.thrown: list = []
+
+        self.create_deck()
+        self.shuffle_deck()
 
     def create_deck(self):
-        self._deck: list[Card] = [Card(value, suit) for suit in Deck.suits for value in Deck.values]
+        [self.deck.append((value, suit)) for suit in Deck.suits for value in Deck.values]
+
+    def renew_deck(self):
+        if self.thrown_amount > 0:
+            self.from_thrown_to_deck()
+
+        if not self.check_uniques():
+            raise Exception("ERROR UNIQ")
+
+        if not self.check_len():
+            raise Exception("ERROR LEN")
+
+        self.shuffle_deck()
 
     def shuffle_deck(self):
-        shuffle(self._deck)
+        shuffle(self.deck)
 
-    def pop(self) -> Card | None:
-        if len(self._deck) == 0:
-            return None
+    def from_thrown_to_deck(self):
+        for i in range(self.thrown_amount):
+            card = self.thrown.pop()
+            self.deck.append(card)
 
-        card = self._deck.pop(len(self._deck) - 1)
+    def check_uniques(self) -> bool:
+        for i in range(self.deck_amount - 1):
+            for j in range(i+1, self.deck_amount):
+                if self.deck[i][0] == self.deck[j][0] and \
+                        self.deck[i][1] == self.deck[j][1]:
+                    return False
+        return True
 
-        self._thrown.append(card)
-        return card
+    def check_len(self) -> bool:
+        if len(self.deck) != len(Deck.suits) * len(Deck.values):
+            return False
+        return True
 
-    def get_notation(self, index: int):
-        return f"{self._deck[index].value}{self._deck[index].suit}"
+    def pop(self) -> tuple | None:
+        if self.deck_amount > 0:
+            card = self.deck.pop()
+            self.thrown.append(card)
+            return card
+        return None
 
-    def print(self):
-        [print(card) for card in self._deck]
+    def pop_n(self, n: int = 2) -> list[tuple]:
+        return [self.pop() for _ in range(n)]
 
     @property
     def deck_amount(self) -> int:
-        return len(self._deck)
+        return len(self.deck)
 
     @property
     def thrown_amount(self) -> int:
-        return len(self._thrown)
+        return len(self.thrown)
+
+    def print(self):
+        for card in self.deck:
+            print(card, end='')
+        print('\n')
 
 
