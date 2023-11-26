@@ -18,11 +18,15 @@ class Deck:
         self.deck: list = []
         self.thrown: list = []
 
-        self.create_deck()
+        self.create_deck_str()
         self.shuffle_deck()
+        print(self.deck)
+
+    def create_deck_str(self):
+        [self.deck.append((value, suit)) for suit in Deck.suits for value in Deck.values]
 
     def create_deck(self):
-        [self.deck.append((value, suit)) for suit in Deck.suits for value in Deck.values]
+        [self.deck.append(f"{value}{suit}") for suit in Deck.suits for value in Deck.values]
 
     def renew_deck(self):
         if self.thrown_amount > 0:
@@ -47,8 +51,7 @@ class Deck:
     def check_uniques(self) -> bool:
         for i in range(self.deck_amount - 1):
             for j in range(i+1, self.deck_amount):
-                if self.deck[i][0] == self.deck[j][0] and \
-                        self.deck[i][1] == self.deck[j][1]:
+                if self.deck[i] == self.deck[j]:
                     return False
         return True
 
@@ -77,7 +80,7 @@ class Deck:
 
     def print(self):
         for card in self.deck:
-            print(card, end='')
+            print(card, end=' ')
         print('\n')
 
 

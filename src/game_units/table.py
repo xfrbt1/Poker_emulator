@@ -1,5 +1,5 @@
-from src.deck.deck import Deck
-from src.player.player import PlayersPool
+from src.game_units.deck import Deck
+from src.game_units.player import PlayersPool
 
 
 class Table:
@@ -14,7 +14,7 @@ class Table:
         self.players = PlayersPool(n)
         self.deck = Deck()
 
-    def add_cards_to_table(self, n: int = 3):
+    def add_cards_to_table(self, n: int = 5):
         [self.table_card.append(self.deck.pop()) for _ in range(n)]
 
     def add_cards_to_players(self, n: int = 2):
