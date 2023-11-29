@@ -11,8 +11,8 @@ class Card:
 
 
 class Deck:
-    suits = ['S', 'H', 'D', 'C']
-    values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
+    suits = ["S", "H", "D", "C"]
+    values = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"]
 
     def __init__(self):
         self.deck: list = []
@@ -22,10 +22,18 @@ class Deck:
         self.shuffle_deck()
 
     def create_deck(self):
-        [self.deck.append((value, suit)) for suit in Deck.suits for value in Deck.values]
+        [
+            self.deck.append((value, suit))
+            for suit in Deck.suits
+            for value in Deck.values
+        ]
 
     def create_deck_str(self):
-        [self.deck.append(f"{value}{suit}") for suit in Deck.suits for value in Deck.values]
+        [
+            self.deck.append(f"{value}{suit}")
+            for suit in Deck.suits
+            for value in Deck.values
+        ]
 
     def renew_deck(self):
         if self.thrown_amount > 0:
@@ -49,7 +57,7 @@ class Deck:
 
     def check_uniques(self) -> bool:
         for i in range(self.deck_amount - 1):
-            for j in range(i+1, self.deck_amount):
+            for j in range(i + 1, self.deck_amount):
                 if self.deck[i] == self.deck[j]:
                     return False
         return True
@@ -59,15 +67,17 @@ class Deck:
             return False
         return True
 
-    def pop(self) -> tuple | None:
+    def pop(self) -> tuple:
         if self.deck_amount > 0:
             card = self.deck.pop()
             self.thrown.append(card)
             return card
-        return None
 
     def pop_n(self, n: int = 2) -> list[tuple]:
         return [self.pop() for _ in range(n)]
+
+    def __len__(self):
+        return len(self.deck)
 
     @property
     def deck_amount(self) -> int:
@@ -79,7 +89,5 @@ class Deck:
 
     def print(self):
         for card in self.deck:
-            print(card, end=' ')
-        print('\n')
-
-
+            print(card, end=" ")
+        print("\n")

@@ -9,14 +9,17 @@ class Player:
         self.cards = []
 
     def __str__(self) -> str:
-        string_repr = ''
+        string_repr = ""
         for card in self.cards:
             string_repr += f"{card}|"
         return string_repr
 
+    def __len__(self):
+        return len(self.cards)
+
 
 class PlayersPool:
-    def __init__(self, n: int = 3):
+    def __init__(self, n: int = 2):
         self.n: int = n
         self.players_list: list[Player] | list = []
 
