@@ -18,14 +18,13 @@ class Deck:
         self.deck: list = []
         self.thrown: list = []
 
-        self.create_deck_str()
+        self.create_deck()
         self.shuffle_deck()
-        print(self.deck)
-
-    def create_deck_str(self):
-        [self.deck.append((value, suit)) for suit in Deck.suits for value in Deck.values]
 
     def create_deck(self):
+        [self.deck.append((value, suit)) for suit in Deck.suits for value in Deck.values]
+
+    def create_deck_str(self):
         [self.deck.append(f"{value}{suit}") for suit in Deck.suits for value in Deck.values]
 
     def renew_deck(self):

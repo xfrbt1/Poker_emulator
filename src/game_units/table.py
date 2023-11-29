@@ -4,24 +4,18 @@ from src.game_units.player import PlayersPool
 
 class Table:
     def __init__(self, n: int = 3):
-        self.deck: Deck | None = None
-        self.players: PlayersPool | None = None
-        self.table_card: list[tuple] = []
-
-        self.init_units(n)
-
-    def init_units(self, n: int):
-        self.players = PlayersPool(n)
-        self.deck = Deck()
+        self.deck: Deck = Deck()
+        self.players: PlayersPool = PlayersPool(n)
+        self.table_cards: list[tuple] = []
 
     def add_cards_to_table(self, n: int = 5):
-        [self.table_card.append(self.deck.pop()) for _ in range(n)]
+        [self.table_cards.append(self.deck.pop()) for _ in range(n)]
 
     def add_cards_to_players(self, n: int = 2):
         self.players.add_players_cards(self.deck.pop_n(n * len(self.players)))
 
     def renew_table(self):
-        self.table_card = []
+        self.table_cards = []
 
     def renew_state(self):
         self.deck.renew_deck()
@@ -34,7 +28,7 @@ class Table:
 
     def __str__(self) -> str:
         string_repr = 'TABLE: '
-        for card in self.table_card:
+        for card in self.table_cards:
             string_repr += f" {card}|"
         return string_repr
 
