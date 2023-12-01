@@ -1,92 +1,53 @@
+from src.game_state.combinations_func import (
+    is_flush,
+    is_four_of_a_kind,
+    is_full_house,
+    is_pair,
+    is_royal_flush,
+    is_straight,
+    is_straight_flush,
+    is_three_of_a_kind,
+    is_two_pairs,
+    is_wheel,
+)
+from src.game_state.list_transformations import create_valued_list, sort_all_cards_asc
+
+
 class Analyzer:
     @staticmethod
     def get_combination(player_cards: list[tuple], table_cards: list[tuple]):
-        all_cards = player_cards + table_cards
+        valued_list = create_valued_list(player_cards + table_cards)
+        sorted_valued_list = sort_all_cards_asc(valued_list)
 
-        valued_list = Analyzer.create_valued_list(all_cards)
-        sorted_valued_list = Analyzer.sort_all_cards_asc(valued_list)
-
-        counter_values = Analyzer.dict_counter(all_cards, 0)
-        counter_suits = Analyzer.dict_counter(all_cards, 1)
-
-        if Analyzer._is_royal_flush():
+        if is_royal_flush(sorted_valued_list):
             return 10
 
-        if Analyzer._is_straight_flush():
+        if is_straight_flush(sorted_valued_list):
             return 9
 
-        if Analyzer._is_four_of_a_kind():
+        if is_four_of_a_kind(sorted_valued_list):
             return 8
 
-        if Analyzer._is_full_house():
+        if is_full_house(sorted_valued_list):
             return 7
 
-        if Analyzer._is_flush():
+        if is_flush(sorted_valued_list):
             return 6
 
-        if Analyzer._is_straight():
+        if is_straight(sorted_valued_list) or is_wheel(sorted_valued_list):
             return 5
 
-    @staticmethod
-    def dict_counter(card_collection: list[tuple], index: int) -> dict:
-        counter_dict = {card[index]: 0 for card in card_collection}
+        if is_three_of_a_kind(sorted_valued_list):
+            return 4
 
-        for card in card_collection:
-            counter_dict[card[index]] += 1
+        if is_two_pairs(sorted_valued_list):
+            return 3
 
-        return counter_dict
+        if is_pair(sorted_valued_list):
+            return 2
 
-    @staticmethod
-    def create_valued_list(card_collection: list[tuple]) -> list[tuple]:
-        valued_card_collection = [
-            (values.get(card[0]), card[1])
-            if values.get(card[0]) is not None
-            else (int(card[0]), card[1])
-            for card in card_collection
-        ]
-        return valued_card_collection
+        return 1
 
     @staticmethod
-    def sort_all_cards_asc(valued_card_collection: list[tuple]):
-        sorted_list = sorted(valued_card_collection, key=lambda x: x[0])
-        return sorted_list
-
-    @staticmethod
-    def _is_royal_flush():
+    def get_winner(players_cards: list[list[tuple]]):
         ...
-
-    @staticmethod
-    def _is_straight_flush():
-        ...
-
-    @staticmethod
-    def _is_four_of_a_kind():
-        ...
-
-    @staticmethod
-    def _is_full_house():
-        ...
-
-    @staticmethod
-    def _is_flush():
-        ...
-
-    @staticmethod
-    def _is_straight():
-        ...
-
-
-combinations = {
-    1: "HIGH CARD",
-    2: "ONE PAIR",
-    3: "TWO PAIRS",
-    4: "THREE OF A KIND",
-    5: "STRAIGHT",
-    6: "FLUSH",
-    7: "FULL HOUSE",
-    8: "FOUR OF A KIND",
-    9: "STRAIGHT FLUSH",
-    10: "FLUSH ROYAL",
-}
-
-values = {"J": 11, "Q": 12, "K": 13, "A": 14}

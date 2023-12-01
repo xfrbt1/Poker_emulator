@@ -9,13 +9,25 @@ class GameState:
         self.table: Table = Table(n)
 
         self.players_combination_mapping: Dict[int, int] = {}
+        self.draws = 0
 
     def update(self):
+        self.players_combination_mapping = {}
         self.table.renew_state()
         self.table.update_table()
 
     def analyze(self):
-        print(self.table.table_cards)
         for i, player in enumerate(self.table.players.players_list):
-            print(player)
-            Analyzer.get_combination(player.cards, self.table.table_cards)
+            self.players_combination_mapping[i] = Analyzer.get_combination(
+                player.cards, self.table.table_cards
+            )
+
+        max_value = max(self.players_combination_mapping.values())
+        count_max_values = sum(
+            1
+            for value in self.players_combination_mapping.values()
+            if value == max_value
+        )
+
+        if count_max_values > 1:
+            self.draws += 1
