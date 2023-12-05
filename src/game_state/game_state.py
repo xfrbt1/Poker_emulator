@@ -46,7 +46,3 @@ class GameState:
                 if v == max_value:
                     print("winner: ", k)
                     self.table.print_sate()
-
-
-
-print(GameState().__doc__)
