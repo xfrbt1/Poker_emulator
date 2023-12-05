@@ -29,7 +29,7 @@ class Table:
     def __str__(self) -> str:
         string_repr = "TABLE: "
         for card in self.table_cards:
-            string_repr += f" {card}|"
+            string_repr += f"{card}"
         return string_repr
 
     def print_sate(self):

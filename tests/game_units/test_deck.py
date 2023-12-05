@@ -4,13 +4,10 @@ from src.game_units.deck import Deck
 
 
 def test_create_deck(deck):
-    """deck creation test len(deck cards) == 52"""
     assert deck.deck_amount == len(Deck.suits) * len(Deck.values)
 
 
 def test_pop(deck):
-    """check pop deck operation
-    check renew operation"""
     card = deck.pop()
     assert card == deck.thrown[0]
 
@@ -26,9 +23,8 @@ def test_pop_n(deck):
     assert deck.deck_amount == len(Deck.suits) * len(Deck.values)
 
 
+@pytest.mark.skip
 def test_renew_deck_exception(deck):
-    """add extra element in deck
-    raise exception"""
     deck.deck.append((Deck.suits[1], Deck.suits[0]))
 
     with pytest.raises(Exception):

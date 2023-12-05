@@ -15,7 +15,7 @@ from src.game_state.list_transformations import create_valued_list, sort_all_car
 
 class Analyzer:
     @staticmethod
-    def get_combination(player_cards: list[tuple], table_cards: list[tuple]):
+    def get_combination(player_cards: list[tuple], table_cards: list[tuple]) -> int:
         valued_list = create_valued_list(player_cards + table_cards)
         sorted_valued_list = sort_all_cards_asc(valued_list)
 

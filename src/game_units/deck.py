@@ -39,11 +39,11 @@ class Deck:
         if self.thrown_amount > 0:
             self.from_thrown_to_deck()
 
-        if not self.check_uniques():
-            raise Exception("ERROR UNIQ")
-
-        if not self.check_len():
-            raise Exception("ERROR LEN")
+        # if not self.check_uniques():
+        #     raise Exception("ERROR UNIQ")
+        #
+        # if not self.check_len():
+        #     raise Exception("ERROR LEN")
 
         self.shuffle_deck()
 

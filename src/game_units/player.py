@@ -11,7 +11,7 @@ class Player:
     def __str__(self) -> str:
         string_repr = ""
         for card in self.cards:
-            string_repr += f"{card}|"
+            string_repr += f"{card}"
         return string_repr
 
     def __len__(self):
@@ -41,6 +41,9 @@ class PlayersPool:
 
     def __len__(self) -> int:
         return self.n
+
+    def print_player(self, index):
+        print(self.players_list[index].cards)
 
     def print(self):
         [print(f"PLAYER {i}: ", player) for i, player in enumerate(self.players_list)]
