@@ -1,4 +1,4 @@
-from src.game_state.list_transformations import dict_counter
+from src.game_state.list_transformations import dict_counter, uniq_cards_collection
 
 
 def is_royal_flush(sorted_card_collection: list[tuple]) -> bool:
@@ -8,8 +8,7 @@ def is_royal_flush(sorted_card_collection: list[tuple]) -> bool:
     counter_suits = dict_counter(sorted_card_collection, 1)
     max_suit = max(counter_suits, key=counter_suits.get)
     new_collection = [card for card in sorted_card_collection if card[1] == max_suit]
-
-    return bool(is_straight(new_collection) and new_collection[-1][1] == 14)
+    return bool(is_straight(new_collection) and new_collection[-1][0] == 14)
 
 
 def is_straight_flush(sorted_card_collection: list[tuple]) -> bool:
@@ -53,12 +52,17 @@ def is_flush(sorted_card_collection: list[tuple]) -> bool:
 
 
 def is_straight(sorted_card_collection: list[tuple]) -> bool:
+
+    uniq_by_value = uniq_cards_collection(sorted_card_collection, 0)
+
     counter = 1
 
-    for i in range(len(sorted_card_collection) - 1):
-        if sorted_card_collection[i][0] + 1 == sorted_card_collection[i + 1][0]:
+    for i in range(len(uniq_by_value) - 1):
+        if uniq_by_value[i][0] + 1 == uniq_by_value[i + 1][0]:
             counter += 1
-        elif sorted_card_collection[i][0] - sorted_card_collection[i + 1][0] > 1:
+            if counter == 5:
+                return True
+        elif uniq_by_value[i + 1][0] - uniq_by_value[i][0] > 1:
             counter = 1
 
     return counter >= 5
