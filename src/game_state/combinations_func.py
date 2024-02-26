@@ -52,7 +52,6 @@ def is_flush(sorted_card_collection: list[tuple]) -> bool:
 
 
 def is_straight(sorted_card_collection: list[tuple]) -> bool:
-
     uniq_by_value = uniq_cards_collection(sorted_card_collection, 0)
 
     counter = 1

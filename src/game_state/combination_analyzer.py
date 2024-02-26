@@ -16,37 +16,30 @@ from src.game_state.list_transformations import create_valued_list, sort_all_car
 class Analyzer:
     @staticmethod
     def get_combination(player_cards: list[tuple], table_cards: list[tuple]) -> int:
-        valued_list = create_valued_list(player_cards + table_cards)
-        sorted_valued_list = sort_all_cards_asc(valued_list)
+        valued_list: list[tuple] = create_valued_list(player_cards + table_cards)
+        sorted_valued_list: list[tuple] = sort_all_cards_asc(valued_list)
+        return Analyzer.get_combination_value(sorted_valued_list)
 
-        if is_royal_flush(sorted_valued_list):
-            return 10
+    @staticmethod
+    def get_combination_value(sorted_valued_list: list[tuple]) -> int:
+        mapping = {
+            is_royal_flush: 10,
+            is_straight_flush: 9,
+            is_four_of_a_kind: 8,
+            is_full_house: 7,
+            is_flush: 6,
+            is_straight: 5,
+            is_wheel: 5,
+            is_three_of_a_kind: 4,
+            is_two_pairs: 3,
+            is_pair: 2,
+        }
 
-        if is_straight_flush(sorted_valued_list):
-            return 9
-
-        if is_four_of_a_kind(sorted_valued_list):
-            return 8
-
-        if is_full_house(sorted_valued_list):
-            return 7
-
-        if is_flush(sorted_valued_list):
-            return 6
-
-        if is_straight(sorted_valued_list) or is_wheel(sorted_valued_list):
-            return 5
-
-        if is_three_of_a_kind(sorted_valued_list):
-            return 4
-
-        if is_two_pairs(sorted_valued_list):
-            return 3
-
-        if is_pair(sorted_valued_list):
-            return 2
-
-        return 1
+        for key in mapping.keys():
+            if key(sorted_valued_list):
+                return mapping[key]
+        else:
+            return 1
 
     @staticmethod
     def get_winner(players_cards: list[list[tuple]]):

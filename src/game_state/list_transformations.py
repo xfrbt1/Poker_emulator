@@ -25,7 +25,9 @@ def sort_all_cards_asc(valued_card_collection: list[tuple]) -> list[tuple]:
     return sorted_list
 
 
-def uniq_cards_collection(valued_card_collection: list[tuple], index: int = 0) -> list[tuple]:
+def uniq_cards_collection(
+    valued_card_collection: list[tuple], index: int = 0
+) -> list[tuple]:
     uniq_collection = []
     for _ in valued_card_collection:
         if not is_in_list(uniq_collection, _[index], index):
