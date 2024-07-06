@@ -12,9 +12,11 @@ def dict_counter(card_collection: list[tuple], index: int) -> dict:
 
 def create_valued_list(card_collection: list[tuple]) -> list[tuple]:
     valued_card_collection = [
-        (values.get(card[0]), card[1])
-        if values.get(card[0]) is not None
-        else (int(card[0]), card[1])
+        (
+            (values.get(card[0]), card[1])
+            if values.get(card[0]) is not None
+            else (int(card[0]), card[1])
+        )
         for card in card_collection
     ]
     return valued_card_collection

@@ -26,6 +26,9 @@ class GameState:
             if value == max(self.players_combination_mapping.values())
         )
 
+        if count_max_values > 1:
+            self.draws += 1
+
         #     """counting winners and make compare between same cards combinations players"""
         #     """for non sequence combinations make compare of values on hands players card O(n^2)"""
         #     """for all same combinations with a sequence, compare high card that sequence contains"""
