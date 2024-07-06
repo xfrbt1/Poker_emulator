@@ -1,4 +1,5 @@
 import datetime
+
 from src.game_state.game_state import GameState
 
 
@@ -18,10 +19,20 @@ def emulate_not_finish_version(n, pl_n):
 
 
 def main(pl_n):
-    for n in [100, 1000, 10000]:
+    for n in [100, 1000, 10000, 100000, 1000000]:
         print("_______________________________________________________________")
         emulate_not_finish_version(n, pl_n)
 
 
 if __name__ == "__main__":
     main(2)
+    print("\n\n\n")
+
+    main(3)
+    print("\n\n\n")
+
+    main(4)
+    print("\n\n\n")
+
+    main(5)
+    print("\n\n\n")

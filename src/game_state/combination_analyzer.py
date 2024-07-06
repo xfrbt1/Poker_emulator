@@ -44,5 +44,4 @@ class Analyzer:
             return 1
 
     @staticmethod
-    def get_winner(players_cards: list[list[tuple]]):
-        ...
+    def get_winner(players_cards: list[list[tuple]]): ...
