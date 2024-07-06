@@ -20,11 +20,24 @@ class GameState:
                 player.cards, self.table.table_cards
             )
 
-        max_value = max(self.players_combination_mapping.values())
         count_max_values = sum(
             1
             for value in self.players_combination_mapping.values()
-            if value == max_value
+            if value == max(self.players_combination_mapping.values())
         )
 
+        #     """counting winners and make compare between same cards combinations players"""
+        #     """for non sequence combinations make compare of values on hands players card O(n^2)"""
+        #     """for all same combinations with a sequence, compare high card that sequence contains"""
 
+        #     """make pool of players with same combinations"""
+        #     """check if combination is a sequence or flush"""
+        #     """make this sequence for all players and compare sequential last card"""
+        #     """if this cards from players hand -> this player winner"""
+
+        #     players_same_result = [
+        #         k for k, v in self.players_combination_mapping.items() if v == max_value
+        #     ]
+
+        # elif count_max_values == 1:
+        #     """1 person win, save data to database"""

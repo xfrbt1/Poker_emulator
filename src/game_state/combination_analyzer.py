@@ -1,3 +1,5 @@
+from typing import Callable
+
 from src.game_state.combinations_func import (
     is_flush,
     is_four_of_a_kind,
@@ -22,7 +24,7 @@ class Analyzer:
 
     @staticmethod
     def get_combination_value(sorted_valued_list: list[tuple]) -> int:
-        mapping = {
+        mapping: dict[Callable, int] = {
             is_royal_flush: 10,
             is_straight_flush: 9,
             is_four_of_a_kind: 8,
